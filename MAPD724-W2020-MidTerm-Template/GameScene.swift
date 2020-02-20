@@ -17,7 +17,7 @@ class GameScene: SKScene {
     var oceanSprite2: Ocean?
     var planeSprite: Plane?
     var islandSprite: Island?
-    var cloudSprites: Cloud?
+    var cloudSprites: [Cloud]=[]
     
     //var config: Config?
     
@@ -50,15 +50,15 @@ class GameScene: SKScene {
         self.islandSprite = Island()
         self.addChild(islandSprite!)
         
-        self.cloudSprites = Cloud()
-        self.addChild(cloudSprites!)
-        
+//        self.cloudSprites = Cloud()
+//        self.addChild(cloudSprites!)
+//
         // add clouds
 //        for index in 0...1
 //        {
-//            let cloud: Cloud = Cloud()
-//            cloudSprites.append(cloud)
-//            self.addChild(cloudSprites[index])
+            let cloud: Cloud = Cloud()
+            cloudSprites.append(cloud)
+            self.addChild(cloudSprites[0])
 //        }
         
         let engineSound = SKAudioNode(fileNamed: "engine.mp3")
@@ -82,17 +82,17 @@ class GameScene: SKScene {
     
     func touchDown(atPoint pos : CGPoint)
     {
-        self.planeSprite?.TouchMove(newPos: CGPoint(x: pos.x, y: -575))
+        self.planeSprite?.TouchMove(newPos: CGPoint(x: -400, y: pos.y))
     }
     
     func touchMoved(toPoint pos : CGPoint)
     {
-        self.planeSprite?.TouchMove(newPos: CGPoint(x: pos.x, y: 0))
+        self.planeSprite?.TouchMove(newPos: CGPoint(x: -300, y: pos.y))
     }
     
     func touchUp(atPoint pos : CGPoint)
     {
-        self.planeSprite?.TouchMove(newPos: CGPoint(x: pos.x, y: 0))
+        self.planeSprite?.TouchMove(newPos: CGPoint(x: -400, y: pos.y))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -123,15 +123,15 @@ class GameScene: SKScene {
         
         self.planeSprite?.Update()
         self.islandSprite?.Update()
-        self.cloudSprites?.Update()
+      //  self.cloudSprites?.Update()
         
         CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: islandSprite!)
         
-//        for cloud in cloudSprites
-//        {
-//            cloud.Update()
-//            CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: cloud)
-//        }
+        for cloud in cloudSprites
+        {
+            cloud.Update()
+            CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: cloud)
+        }
         
         if(ScoreManager.Lives < 1)
         {

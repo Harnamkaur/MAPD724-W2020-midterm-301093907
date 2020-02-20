@@ -21,7 +21,7 @@ class Cloud: GameObject
     override func CheckBounds()
     {
         // bottom boundary
-        if(self.position.x < -801)
+        if(self.position.x < -1801)
         {
             self.Reset()
         }
@@ -46,7 +46,7 @@ class Cloud: GameObject
     
     override func Start()
     {
-        self.zPosition = 3
+        self.zPosition = 5
         self.Reset()
         self.alpha = 0.5
     }
